@@ -1,0 +1,467 @@
+<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress Images Online - Image Compressor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <!-- Cropper.js for image cropping functionality -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tab-active {
+            color: #ff7a33;
+            background-color: white;
+            border-top: 2px solid #ff7a33;
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 2px solid white;
+            margin-bottom: -1px;
+            font-weight: 600;
+        }
+        .dark .tab-active {
+            background-color: #111827; /* gray-900 */
+            border-left: 1px solid #374151; /* gray-700 */
+            border-right: 1px solid #374151;
+            border-bottom: 2px solid #111827;
+        }
+        .tab-inactive {
+            color: #6b7280;
+            background-color: #f3f4f6;
+            border-top: 1px solid transparent;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .dark .tab-inactive {
+            color: #9ca3af;
+            background-color: #1f2937; /* gray-800 */
+            border-bottom: 1px solid #374151;
+        }
+        .tab-inactive:hover {
+            background-color: #e5e7eb;
+        }
+        .dark .tab-inactive:hover {
+            background-color: #374151;
+        }
+        
+        /* Cropper container specific height */
+        .img-container {
+            width: 100%;
+            height: 350px;
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .img-container {
+            background-color: #1f2937;
+        }
+        .img-container img {
+<!-- ... existing code ... -->
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+
+    <!-- Header -->
+    <header class="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 transition-colors duration-200">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xl tracking-tight">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 20H22L12 2Z" fill="#f97316" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="12" cy="14" r="3" fill="currentColor"/>
+                </svg>
+                <span class="font-bold text-gray-900 dark:text-white">image<span class="font-normal text-orange-500">Compressor</span></span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-blue-600 dark:text-blue-400 items-center">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="hover:underline">Home</a>
+                <a href="#how-to" target="_blank" rel="noopener noreferrer" class="hover:underline">How-to</a>
+                <a href="#blog" target="_blank" rel="noopener noreferrer" class="hover:underline">Blog</a>
+                <button id="theme-toggle" class="ml-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition-colors" aria-label="Toggle Dark Mode">
+                    <!-- Sun Icon (shows in dark mode) -->
+                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <!-- Moon Icon (shows in light mode) -->
+                    <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Compress Images Online</h1>
+        </div>
+        
+        <div class="text-[15px] text-gray-700 dark:text-gray-300 mb-8 space-y-4 leading-relaxed">
+            <p>Compress and optimize your JPEG, PNG, WebP, GIF and SVG images. This free online tool uses advanced compression algorithms to reduce file sizes while maintaining quality. All processing happens in your browser – your files never leave your device.</p>
+            <ul class="list-disc pl-6 space-y-1 text-gray-600 dark:text-gray-400">
+                <li>Drop JPEG, PNG, WebP, GIF or SVG images.</li>
+                <li>Click COMPRESS, then save or adjust quality.</li>
+            </ul>
+        </div>
+
+        <!-- Application Interface -->
+        <div class="bg-[#f1f5f9] dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 mb-8 transition-colors duration-200">
+            <!-- Tabs -->
+            <div class="flex items-end border-b border-gray-200 dark:border-gray-700">
+                <div class="flex pl-2 gap-1 relative z-10 -mb-[1px]">
+                    <button class="px-5 py-2.5 text-sm rounded-t-md tab-inactive transition">Converter</button>
+                    <button class="px-5 py-2.5 text-sm rounded-t-md tab-active">Compressor</button>
+                </div>
+                <div class="flex-grow"></div>
+                <button class="px-6 py-2 text-xs font-bold bg-[#e2e8f0] dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600 mb-2 mr-2 hover:bg-gray-300 dark:hover:bg-gray-600 transition">EXIF</button>
+            </div>
+
+            <!-- Tool Workspace -->
+            <div class="bg-white dark:bg-gray-900 rounded-b-lg rounded-tr-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 relative min-h-[400px] flex flex-col items-center transition-colors duration-200">
+                
+                <!-- Action Buttons Top -->
+<!-- ... existing code ... -->
+                <!-- Dropzone / Image Container -->
+                <div id="drop-zone" class="w-full mb-6">
+                    <div id="drop-prompt" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg mx-auto h-[250px] w-full max-w-2xl bg-gray-50 dark:bg-gray-800/50 transition hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+                        <span class="text-[#60a5fa] font-medium text-lg mb-2">Drop Your Files Here</span>
+                        <span class="text-gray-400 text-sm">or click to browse</span>
+                    </div>
+                    
+                    <div id="image-workspace" class="hidden w-full max-w-3xl mx-auto flex flex-col items-center">
+                        <div class="img-container rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 mb-4">
+                            <img id="image-preview" src="" alt="Image to crop">
+                        </div>
+                        
+                        <!-- Tool Settings (Hidden until image loaded) -->
+                        <div id="settings-panel" class="w-full bg-gray-50 dark:bg-gray-800 p-4 rounded border border-gray-200 dark:border-gray-700 flex flex-wrap gap-6 justify-center text-sm transition-colors duration-200">
+                            
+                            <!-- Format Selection -->
+                            <div class="flex flex-col gap-1">
+                                <label class="font-bold text-gray-700 dark:text-gray-300 text-xs uppercase">Format</label>
+                                <select id="format-select" class="border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 bg-white dark:bg-gray-700 dark:text-white outline-none focus:border-blue-500">
+                                    <option value="image/jpeg">JPEG (JPG)</option>
+                                    <option value="image/png">PNG</option>
+<!-- ... existing code ... -->
+                            <!-- Quality Slider -->
+                            <div class="flex flex-col gap-1 flex-grow max-w-[200px]">
+                                <div class="flex justify-between">
+                                    <label class="font-bold text-gray-700 dark:text-gray-300 text-xs uppercase">Quality</label>
+                                    <span id="quality-display" class="text-xs font-bold text-blue-600 dark:text-blue-400">80%</span>
+                                </div>
+                                <input type="range" id="quality-slider" min="1" max="100" value="80" class="w-full mt-1 accent-blue-500 cursor-pointer">
+                            </div>
+
+                            <!-- Crop Ratio -->
+                            <div class="flex flex-col gap-1">
+                                <label class="font-bold text-gray-700 dark:text-gray-300 text-xs uppercase">Crop Ratio</label>
+                                <div class="flex bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded overflow-hidden">
+                                    <button class="ratio-btn px-3 py-1.5 bg-blue-50 dark:bg-gray-600 text-blue-600 dark:text-blue-300 font-medium border-r border-gray-200 dark:border-gray-600" data-ratio="NaN">Free</button>
+                                    <button class="ratio-btn px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium border-r border-gray-200 dark:border-gray-600" data-ratio="1">1:1</button>
+                                    <button class="ratio-btn px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium border-r border-gray-200 dark:border-gray-600" data-ratio="1.3333333333333333">4:3</button>
+                                    <button class="ratio-btn px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium" data-ratio="1.7777777777777777">16:9</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Area -->
+                <div id="results-area" class="hidden w-full max-w-lg mb-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded p-4 text-center">
+                    <h4 class="text-green-800 dark:text-green-400 font-bold mb-2">Compression Successful!</h4>
+                    <div class="flex justify-center gap-8 text-sm">
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs uppercase">Original</p>
+                            <p id="size-original" class="font-bold text-gray-700 dark:text-gray-200">-</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs uppercase">Compressed</p>
+                            <p id="size-compressed" class="font-bold text-green-700 dark:text-green-400 text-lg">-</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs uppercase">Saved</p>
+                            <p id="size-saved" class="font-bold text-blue-600 dark:text-blue-400">-</p>
+                        </div>
+                    </div>
+                </div>
+<!-- ... existing code ... -->
+        </div>
+
+        <!-- Text Content -->
+        <section class="mt-12 space-y-12 text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">
+            
+            <div id="how-to">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">How It Works</h2>
+                <p>This tool runs entirely in your browser – no server uploads required. Add your images and click COMPRESS. The tool automatically analyzes each file and selects optimal compression settings. Once processing is complete, you can save the result immediately or use the comparison view to fine-tune quality with the slider. Each image can be adjusted individually before saving.</p>
+            </div>
+
+            <!-- Dark stylized instruction block -->
+            <div class="bg-[#1e293b] text-white rounded-xl p-8 shadow-lg border border-gray-700">
+                <h3 class="text-xl font-bold mb-3">How to compress images — step by step</h3>
+                <p class="text-sm text-gray-300 mb-5 max-w-2xl">A walk-through guide with screenshots: upload your files, choose JPEG / PNG / WebP quality, compare against the original, save the result.</p>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 group">
+                    Read the guide 
+                    <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </a>
+            </div>
+
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">JPEG Compression</h2>
+                    <p>For JPEG files, the tool detects the original quality level from the file's quantization tables. The default target quality is 80, which provides an excellent balance between file size and visual quality for most images. You can use the slider to adjust this – higher values preserve more detail but result in larger files, while lower values create smaller files with more visible compression artifacts. For even smaller files, consider <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">converting to WebP or AVIF</a>.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">PNG Optimization</h2>
+                    <p>PNG images are converted to PNG8 format with up to 256 colors. This format is ideal for web graphics, icons, logos, screenshots, and illustrations where color count is limited. Transparency is fully preserved. The Colors slider lets you reduce the palette further for additional compression.</p>
+                    <p class="mt-2">If your PNG is a photograph or contains smooth gradients with many colors, PNG8 may not be suitable. In this case, convert your image to JPG or WebP for better results.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">WebP Compression</h2>
+                    <p>WebP images are compressed using lossy compression similar to JPEG. WebP typically achieves 25-35% smaller file sizes than JPEG at equivalent visual quality. The quality slider works the same way as for JPEG – adjust it to find the right balance for your needs.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">GIF Optimization</h2>
+                    <p>Animated GIFs are optimized by analyzing and reducing the color palette while preserving animation frames. The Colors slider controls the maximum palette size from 2 to 256 colors. Reducing colors can dramatically decrease file size, especially for animations with simple graphics. For even better compression, consider converting GIF to WebP animation.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 pt-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Privacy & Security</h2>
+                        <p>All image processing happens entirely in your browser using WebAssembly technology. There are no uploads to any server, no data collection, and no privacy concerns. All metadata (EXIF, GPS, camera info) is automatically removed from compressed images.</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Free & Unlimited</h2>
+                        <p>No registration required, no daily limits, no watermarks. Compress as many images as you need, completely free. The tool is designed for both casual users and professionals who need reliable, high-quality compression.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Section -->
+            <div id="blog" class="pt-8 border-t border-gray-200 dark:border-gray-800">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">From the blog</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="block p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:shadow-md transition-shadow group">
+                        <h3 class="font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400">Image Compression for People Who Just Want Smaller Photos</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-4">Why phone photos are so large, what compression actually does, and the right settings for email, web, and social.</p>
+                    </a>
+
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="block p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:shadow-md transition-shadow group">
+                        <h3 class="font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400">Those Weird Blotches Around Text</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-4">A field guide to compression artifacts: blocking, mosquito noise, color bleeding, banding — what causes each and how to avoid them.</p>
+                    </a>
+
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="block p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:shadow-md transition-shadow group">
+                        <h3 class="font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400">How to Compress an Image to an Exact File Size</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-4">Why hitting an exact size like 200 KB is harder than it sounds, and the workflow that consistently lands close to the target.</p>
+                    </a>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-gray-800 mt-12 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <p>© imagecompressor.com | Terms and Privacy</p>
+            <div class="flex gap-4">
+                <select class="bg-transparent border-none outline-none cursor-pointer">
+                    <option>English</option>
+                    <option>Español</option>
+                </select>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core App Logic -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Theme Toggle Logic ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+
+            themeToggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+            });
+
+            // --- State Variables ---
+            let cropper = null;
+            let currentFile = null;
+
+            // --- DOM Elements ---
+            const dropPrompt = document.getElementById('drop-prompt');
+            const imageWorkspace = document.getElementById('image-workspace');
+            const imagePreview = document.getElementById('image-preview');
+            const settingsPanel = document.getElementById('settings-panel');
+            const resultsArea = document.getElementById('results-area');
+            const formatSelect = document.getElementById('format-select');
+            const qualitySlider = document.getElementById('quality-slider');
+            const qualityDisplay = document.getElementById('quality-display');
+            const ratioBtns = document.querySelectorAll('.ratio-btn');
+            
+            // Add hidden file input dynamically
+            let fileInput = document.getElementById('file-input');
+            if (!fileInput) {
+                fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.id = 'file-input';
+                fileInput.accept = 'image/*';
+                fileInput.classList.add('hidden');
+                document.body.appendChild(fileInput);
+            }
+
+            // Create Compress & Download Button
+            const compressBtnContainer = document.createElement('div');
+            compressBtnContainer.className = 'w-full flex justify-center mt-6 pt-4 border-t border-gray-200 dark:border-gray-700';
+            const compressBtn = document.createElement('button');
+            compressBtn.className = 'px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition-colors';
+            compressBtn.innerText = 'Compress & Download';
+            compressBtnContainer.appendChild(compressBtn);
+            settingsPanel.appendChild(compressBtnContainer);
+
+            // --- File Handling ---
+            const handleFile = (file) => {
+                if (!file || !file.type.startsWith('image/')) return;
+                currentFile = file;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    
+                    // Toggle UI visibility
+                    dropPrompt.classList.add('hidden');
+                    imageWorkspace.classList.remove('hidden');
+                    resultsArea.classList.add('hidden');
+                    
+                    // Initialize or replace Cropper
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    
+                    cropper = new Cropper(imagePreview, {
+                        viewMode: 1,
+                        background: false,
+                        autoCropArea: 0.9,
+                        responsive: true
+                    });
+                };
+                reader.readAsDataURL(file);
+            };
+
+            // Trigger file selection
+            dropPrompt.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length) handleFile(e.target.files[0]);
+            });
+
+            // Drag and Drop Events
+            dropPrompt.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropPrompt.classList.add('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+            });
+            dropPrompt.addEventListener('dragleave', () => {
+                dropPrompt.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+            });
+            dropPrompt.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropPrompt.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+                if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+            });
+
+            // --- Settings Listeners ---
+            qualitySlider.addEventListener('input', (e) => {
+                qualityDisplay.innerText = e.target.value + '%';
+            });
+
+            // Ratio Buttons
+            ratioBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Reset styling on all buttons
+                    ratioBtns.forEach(b => {
+                        b.classList.remove('bg-blue-50', 'dark:bg-gray-600', 'text-blue-600', 'dark:text-blue-300');
+                        b.classList.add('hover:bg-gray-50', 'dark:hover:bg-gray-600', 'text-gray-700', 'dark:text-gray-200');
+                    });
+                    
+                    // Add active styling to clicked
+                    const target = e.target;
+                    target.classList.add('bg-blue-50', 'dark:bg-gray-600', 'text-blue-600', 'dark:text-blue-300');
+                    target.classList.remove('hover:bg-gray-50', 'dark:hover:bg-gray-600', 'text-gray-700', 'dark:text-gray-200');
+                    
+                    // Apply ratio to cropper
+                    if (cropper) {
+                        const ratio = parseFloat(target.dataset.ratio);
+                        cropper.setAspectRatio(isNaN(ratio) ? NaN : ratio);
+                    }
+                });
+            });
+
+            // --- Compression and Download Logic ---
+            compressBtn.addEventListener('click', () => {
+                if (!cropper) return;
+                
+                const format = formatSelect.value;
+                const quality = parseInt(qualitySlider.value) / 100;
+                
+                // Get cropped canvas
+                const canvas = cropper.getCroppedCanvas({
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+                
+                // Convert to Blob and Download
+                canvas.toBlob((blob) => {
+                    if (!blob) return;
+                    
+                    // Display results
+                    const originalKB = (currentFile.size / 1024).toFixed(1);
+                    const compressedKB = (blob.size / 1024).toFixed(1);
+                    const savedPercent = (((currentFile.size - blob.size) / currentFile.size) * 100).toFixed(1);
+                    
+                    document.getElementById('size-original').innerText = originalKB + ' KB';
+                    document.getElementById('size-compressed').innerText = compressedKB + ' KB';
+                    document.getElementById('size-saved').innerText = savedPercent > 0 ? savedPercent + '%' : '0%';
+                    
+                    // Show success area
+                    resultsArea.classList.remove('hidden');
+
+                    // Trigger Download
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    
+                    // Determine extension based on selected format
+                    const ext = format === 'image/jpeg' ? '.jpg' : format === 'image/png' ? '.png' : '.webp';
+                    
+                    // Get original name without extension
+                    const originalName = currentFile.name.substring(0, currentFile.name.lastIndexOf('.')) || 'image';
+                    a.download = `${originalName}-compressed${ext}`;
+                    
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                }, format, quality);
+            });
+        });
+    </script>
+</body>
+</html>
